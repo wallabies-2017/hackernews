@@ -77,7 +77,7 @@ export default {
 			return this.mode.edit ? "Summary":"Edit";
 		},
 		detailMode: function(){
-			return this.mode.detail ? "Hide":"Detail";
+			return this.mode.detail ? "Hide":"Comment";
 		},
 	}
 };

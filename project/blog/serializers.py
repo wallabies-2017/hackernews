@@ -4,10 +4,10 @@ from blog.models import Post, Comment, Vote
 class CommentDetailSerializer(serializers.ModelSerializer):
 
 	comments = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='blog:comment-detail'
-    )
+		many=True,
+		read_only=True,
+		view_name='blog:comment-detail'
+	)
 
 	create_comment = serializers.HyperlinkedIdentityField(view_name='blog:comment-comments')
 
@@ -29,10 +29,10 @@ class CommentListSerializer(serializers.HyperlinkedModelSerializer):
 class PostDetailSerializer (serializers.HyperlinkedModelSerializer):
 
 	comments = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='blog:comment-detail'
-    )
+		many=True,
+		read_only=True,
+		view_name='blog:comment-detail'
+	)
 
 	create_comment = serializers.HyperlinkedIdentityField(view_name='blog:comments')
 

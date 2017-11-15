@@ -31,9 +31,7 @@ const store = new Vuex.Store({
 			if (payload.data.hasOwnProperty('content')){
 				Vue.set(payload.obj, 'content', payload.data.content);
 			}
-				if (payload.data.hasOwnProperty('username')){
-				Vue.set(payload.obj, 'content', payload.data.content);
-			}
+
 	
 		},
 		
@@ -60,11 +58,11 @@ const store = new Vuex.Store({
 			}
 			var cleanedData = {};
 			if (payload.data.hasOwnProperty('title')){
-				cleanedData.name = payload.data.name;
+				cleanedData.title = payload.data.title;
 			}
 	
 			if (payload.data.hasOwnProperty('content')){
-				cleanedData.description = payload.data.description;
+				cleanedData.content = payload.data.content;
 			}
 
 			if (cleanedData){
@@ -106,7 +104,7 @@ const store = new Vuex.Store({
 	
 			var cleanedData = {};
 			if (payload.data.hasOwnProperty('content')){
-				cleanedData.name = payload.data.content;
+				cleanedData.content = payload.data.content;
 			}
 
 			if (cleanedData){			
