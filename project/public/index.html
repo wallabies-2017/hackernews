@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<title>HackerNews</title>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<li 
+					is="post-list-item"
+					v-for="item in sharedState.posts"
+					v-bind:post="item"
+				>
+				</li>
+			</ul>
+			
+
+			<create-post
+			>
+			</create-post>
+			
+		</div>
+
+		<script src="/dist/build.js"></script>
+	</body>
+</html>

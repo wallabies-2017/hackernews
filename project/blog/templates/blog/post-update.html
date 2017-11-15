@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Update Post</title>
+</head>
+<body>
+	<a href="{% url 'blog:index' %}">Index</a>
+	<p>Edit Post</p>
+	<form action="{% url 'blog:post-update' pk=post.id %}" method="POST">
+		
+		{% csrf_token %}
+
+		{{ form }}
+
+		<input type="submit" value="Post Event">
+	</form>
+
+</body>
+</html>

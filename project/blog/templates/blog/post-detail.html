@@ -1,0 +1,36 @@
+{% load blog_extras %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Post Detail</title>
+</head>
+<body>
+	<h1>{{post.title}}</h1>
+	<a href="{% url 'blog:index' %}">Index</a>
+	
+	<div>
+		<p>{{post.description}}</p>
+		<p>Posted By: {{post.posted_by}}</p>
+		<p>Posted At: {{post.posted_at}} </p>
+		
+		<a href="{% url 'blog:post-comment-create' pk=post.id %}">Reply</a>
+
+		{% if user == post.posted_by %}
+		<a href="{% url 'blog:post-delete' pk=post.id %}">Delete</a>
+		<a href="{% url 'blog:post-update' pk=post.id %}">Update</a>
+		{% endif %}
+		<form action="{% url 'blog:post-vote' pk=post.id %}" method="POST">
+
+			{% csrf_token %}
+			{{vote_form}}
+			<input type="submit" value="Vote">
+			<p>{{votes}}</p>
+		</form>
+			
+	</div>
+		<h4>Comments</h4>
+		
+		{% comments_on_comments post.comments.all %}
+</body>
+</html>

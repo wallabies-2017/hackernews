@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hackernews Index</title>
+</head>
+<body>
+	<h1>Welcome to Hackernews</h1>
+	<a href="{% url 'blog:post-create' %}">Submit Post</a>
+
+	{% for post in posts %}
+		<div>
+			<p><a href="{% url 'blog:post-detail' pk=post.id %}">{{ post.title }}</a></p>
+			<p>Posted By: {{post.posted_by}}</p>
+		</div>
+	{% endfor %}
+</body>
+</html>

@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create Post</title>
+</head>
+<body>
+	<h1>Submit Post</h1>
+	<a href="{% url 'blog:index' %}">Index</a>
+
+	<form action="{% url 'blog:post-create' %}" method="POST">
+		
+		{% csrf_token %}
+
+		{{ form }}
+
+		<input type="submit" value="Post">
+	</form>
+
+</body>
+</html>

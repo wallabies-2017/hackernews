@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create Comment</title>
+</head>
+<body>
+	<h1>Comment Reply</h1>
+	<a href="{% url 'blog:index' %}">Index</a>
+
+	<form action="{% url 'blog:comment-comment-create' comment_id=comment.id %}" method="POST">
+		
+		{% csrf_token %}
+
+		{{ form }}
+
+		<input type="submit" value="Reply">
+	</form>
+
+</body>
+</html>

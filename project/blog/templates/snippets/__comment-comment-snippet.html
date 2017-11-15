@@ -1,0 +1,29 @@
+
+{% load blog_extras %}
+
+<ul>
+			{% for item in comments %}
+			<li>
+				<p>{{item.comment.content}}</p>
+				<p>{{item.comment.author}}</p>
+				<p>{{item.comment.posted_at}}</p>
+				<a href="{% url 'blog:comment-comment-create' comment_id=item.comment.id %}">Reply</a>
+			<form action="{% url 'blog:comment-vote' comment_id=item.comment.id %}" method="POST">
+
+				{% csrf_token %}
+				{{vote_form}}
+				<input type="submit" value="Vote">
+				<p>{{item.votes}}</p>
+			</form>
+ 				{% comment %}
+				{% if user == item.comment.author %}
+			<a href="{% url 'blog:comment-delete' pk=item.comment.id %}">Delete</a>
+			<a href="{% url 'blog:comment-update' pk=item.comment.id %}">Update</a>	{% endif %}			
+				
+				{% endcomment %}
+			{% comments_on_comments item.comment.comments.all %}	
+				
+				
+			</li>
+			{% endfor %}
+</ul>
