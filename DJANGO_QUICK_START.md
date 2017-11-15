@@ -44,7 +44,7 @@ the following should do the trick.
 
 	ex. `from blog.local_settings import *`
 
-
+	
 
 __Notes:__  
 * Once you have created your project use the projcet's `manage.py` file to create new apps for the project.

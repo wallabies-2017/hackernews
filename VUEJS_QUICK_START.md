@@ -68,3 +68,8 @@ if __name__ == "__main__":
 - run `npm install` to download the necessary packages
 - use `npm run dev` to run your project
 - we no longer need to run `python3 manage.py runserver`. That is taken care of for us.
+
+## Install VueX
+
+-while still in your `public` directory
+-run `npm install vuex` to download the third party extension
