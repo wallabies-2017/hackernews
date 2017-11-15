@@ -33,6 +33,6 @@ var app = new Vue({
 	},
 	store: DataStore,
 	created: function(){
-		this.$store.getters.getPosts(function(){});
+		this.$store.dispatch('loadPosts');
 	}
 });

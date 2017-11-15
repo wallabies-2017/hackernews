@@ -1,4 +1,4 @@
-"""hackernews URL Configuration
+"""project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,12 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from django.contrib import admin
+from django.conf.urls import url
+
+from user import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^authenticate/', include('user.urls', namespace='user')),
-    url(r'^api/v0/blog/', include('blog.urls', namespace='blog')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))    
+    url(r'^$', views.Index.as_view(), name="index"),
+    url(r'^create$', views.Create.as_view(), name="create"),
+    url(r'^login$', views.LoginView.as_view(), name='login'),
+    url(r'^logout$', views.Logout.as_view(), name='logout'),
 ]

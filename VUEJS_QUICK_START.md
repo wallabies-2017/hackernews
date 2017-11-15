@@ -73,3 +73,5 @@ if __name__ == "__main__":
 
 -while still in your `public` directory
 -run `npm install vuex` to download the third party extension
+
+## Install Axios

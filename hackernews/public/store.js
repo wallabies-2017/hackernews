@@ -21,8 +21,8 @@ const store = new Vuex.Store({
 				isChanged = true;
 			}
 	
-			if (payload.data.hasOwnProperty('content')){
-				Vue.set(payload.obj, 'content', payload.data.content);
+			if (payload.data.hasOwnProperty('description')){
+				Vue.set(payload.obj, 'description', payload.data.description);
 				isChanged = true;
 			}
 
@@ -74,8 +74,8 @@ const store = new Vuex.Store({
 				cleanedData.title = payload.data.title;
 			}
 	
-			if (payload.data.hasOwnProperty('content')){
-				cleanedData.content = payload.data.content;
+			if (payload.data.hasOwnProperty('description')){
+				cleanedData.description = payload.data.description;
 			}
 
 			if (cleanedData){

@@ -1,15 +1,19 @@
 "use strict";
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import api from './api/blog.js'
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	strict: true,
+	// strict: true,
 	state: {
 		posts: [],
 	},
 	mutations: {
+		loadPosts: function(state, payload){
+			Vue.set(state, 'posts', payload.data);
+		},
 		createPost: function(state, payload){
 			state.posts.push(payload);
 		},
@@ -141,6 +145,13 @@ const store = new Vuex.Store({
 				obj: post,
 				target: payload.comment._id
 			});
+		},
+
+		loadPosts: function(context){
+			api.getPosts().then(function({data, request}){
+				
+				context.commit("loadPosts", {"data":data});
+			});
 		}
 	},
 	getters: {
@@ -173,7 +184,8 @@ const store = new Vuex.Store({
 					return post.comments
 				}				
 			};
-		}
+		},		
+
 	}
 });
 

@@ -1,10 +1,10 @@
 <template>
-	<form v-on:submit.prevent="editPost($event, title, content)">
+	<form v-on:submit.prevent="editPost($event, title, description)">
 		<label> Title:
 			<input type="text" name="title" v-model="title">
 		</label>
-		<label>	Content:
-			<input type="text" name="content" v-model="content">
+		<label>	description:
+			<input type="text" name="description" v-model="description">
 		</label>	
 			<button type="submit">Edit Post</button>
 			
@@ -23,16 +23,16 @@ export default {
 	data: function(){
 		return {
 			title: this.post.title,
-			content: this.post.content
+			description: this.post.description
 		};
 	},
 	methods: {
-		editPost: function(event, title, content){
+		editPost: function(event, title, description){
 			this.$store.dispatch("editPost", {
 				post: this.post,
 				data: {
 					title: title,
-					content: content
+					description: description
 				}
 			});
 		}
