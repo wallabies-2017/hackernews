@@ -10,6 +10,7 @@
 			v-if="mode.edit"
 			v-bind:post="post" 
 			v-bind:comment="comment"
+			v-on:editComplete="mode.edit = !mode.edit"
 		>
 		</edit-comment>
 		<button 

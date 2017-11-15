@@ -1,11 +1,12 @@
 "use strict";
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import api from './api/blog';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	strict: true,
+	// strict: true,
 	state: {
 		posts: [],
 	},
@@ -173,6 +174,15 @@ const store = new Vuex.Store({
 					return post.comments
 				}				
 			};
+		},
+		getPosts: function(state, getters){
+			return function(cb){
+				api.getPosts().then(function({data, request}){
+					console.log(data, request);
+					cb(data);
+					state.posts = data;
+				});
+			}
 		}
 	}
 });

@@ -31,5 +31,8 @@ var app = new Vue({
 		},
 		sharedState: DataStore.state
 	},
-	store: DataStore
+	store: DataStore,
+	created: function(){
+		this.$store.getters.getPosts(function(){});
+	}
 });
