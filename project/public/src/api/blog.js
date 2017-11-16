@@ -18,10 +18,16 @@ export default {
 			url: '/posts/' + postId
 		});
 	},
-	getComments: function(postId){
+	getPostComments: function(postId){
 		return axios({
 			method: 'get',
 			url: '/posts/' + postId + '/comments'
+		});
+	},
+	getCommentComments: function(commentId){
+		return axios({
+			method: 'get',
+			url: '/comments/' + commentId + '/comments'
 		});
 	},
 	createPost: function(data){
@@ -38,10 +44,17 @@ export default {
 			data: data
 		});
 	},
-	addComment: function(postId, data){
+	addPostComment: function(postId, data){
 		return axios({
 			method: 'post',
 			url: '/posts/' + postId + "/comments",
+			data: data
+		});
+	},
+	addCommentComment: function(commentId, data){
+		return axios({
+			method: 'post',
+			url: '/comments/' + commentId + "/comments",
 			data: data
 		});
 	},

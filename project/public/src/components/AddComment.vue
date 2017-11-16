@@ -15,7 +15,8 @@
 export default {
 	name: 'add-comment',
 	props:{
-		post: Object
+		post: Object,
+		comment: Object
 	},
 	data: function(){
 		return {
@@ -26,6 +27,7 @@ export default {
 		addComment: function(event, content){
 			this.$store.dispatch("addComment", {
 				post: this.post,
+				comment: this.comment,
 				data: {
 					content: content
 				}

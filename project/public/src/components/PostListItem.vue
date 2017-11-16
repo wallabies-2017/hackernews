@@ -24,7 +24,7 @@
 		</button>
 		<button 
 			v-bind:key="post.id"
-			v-on:click="mode.detail = !mode.detail" 
+			v-on:click="detailClick"
 		>
 			{{ detailMode }}
 		</button>
@@ -32,7 +32,7 @@
 
 		<transition-group name="component-fade" mode="in-out">
 			<add-comment 
-				v-if="mode.detail"
+				v-if="mode.detail && post.comments"
 				v-bind:post="post"
 				v-bind:key="post.id"
 			>
@@ -45,12 +45,10 @@
 				<li 
 					is="comment-item"
 					v-for="comment in post.comments"
-					v-bind:post="post"
+					v-bind:parent="post"
 					v-bind:comment="comment"
 					v-bind:key="comment.id"
-				>
-				
-				</li>
+				></li>
 			
 			</ul>
 		
@@ -69,6 +67,17 @@ export default {
 			mode: {
 				detail: false,
 				edit: false
+			}
+		}
+	},
+	methods: {
+		detailClick: function(event){
+			this.$set(this.mode, "detail", !this.mode.detail);
+
+			if (this.mode.detail && !Object.hasOwnProperty.call(this.post, "comments")){
+				this.$store.dispatch("loadComments", {
+					post: this.post
+				});
 			}
 		}
 	},	

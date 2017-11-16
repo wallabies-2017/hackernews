@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^comments/(?P<pk>[0-9]+)$', views.CommentDetail.as_view(), name="comment-detail"),
     url(r'^comments/(?P<pk>[0-9]+)/comments$', views.CommentCommentsListView.as_view(), name="comment-comments"),
     url(r'^comments/(?P<pk>[0-9]+)/votes$', views.CommentVoteListView.as_view(), name="comment-votes"),
-     url(r'^posts/(?P<pk>[0-9]+)/votes$', views.PostVoteListView.as_view(), name="post-votes"),
+    url(r'^posts/(?P<pk>[0-9]+)/votes$', views.PostVoteListView.as_view(), name="post-votes"),
 
 ]
 

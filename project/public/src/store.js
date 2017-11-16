@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import api from './api/blog';
-var faker = require("faker");
+
 
 Vue.use(Vuex);
 
@@ -18,21 +18,17 @@ const store = new Vuex.Store({
 		loadPosts: function(state, payload){
 			Vue.set(state, 'posts', payload.data);
 		},
+		loadComments: function(state, payload){
+			Vue.set(payload.obj, 'comments', payload.data);
+		},
 		editPost: function(state, payload){
 			Object.assign(payload.obj, payload.data);
 		},
 		addComment: function(state, payload){
-			payload.obj.comments.push(payload.data)
+			payload.obj.comments.push(payload.data);
 		},
 		editComment: function(state, payload){
-
-			if (payload.data.hasOwnProperty('content')){
-				Vue.set(payload.obj, 'content', payload.data.content)
-			}
-
-			if (payload.data.hasOwnProperty('username')){
-				Vue.set(payload.obj, 'username', payload.data.username)
-			}
+			Object.assign(payload.obj, payload.data);
 		},
 		deleteComment: function(state, payload){
 			_.remove(payload.obj.comments, function(value){
@@ -42,7 +38,6 @@ const store = new Vuex.Store({
 	},
 	actions: {
 		createPost: function(context, payload){
-			
 			api.createPost(payload.data).then(function({request,data}){
 				context.commit("createPost", data);
 			});
@@ -57,12 +52,21 @@ const store = new Vuex.Store({
 			});
 		},
 		addComment: function(context, payload){
-			api.addComment(payload.post.id, payload.data).then(function({request, data}){
-				context.commit("addComment", {
-					obj: payload.post,
-					data: data
+			if (payload.post){
+				api.addPostComment(payload.post.id, payload.data).then(function({request, data}){
+					context.commit("addComment", {
+						obj: payload.post,
+						data: data
+					});
 				});
-			});
+			} else if (payload.comment){
+				api.addCommentComment(payload.comment.id, payload.data).then(function({request, data}){
+					context.commit("addComment", {
+						obj: payload.comment,
+						data: data
+					});
+				});
+			}
 		},
 		editComment: function(context, payload){
 			api.editComment(payload.comment.id, payload.data).then(function({request, data}){
@@ -90,6 +94,27 @@ const store = new Vuex.Store({
 					"data": data
 				});
 			});
+		},
+		loadComments: function(context, payload){
+			if(payload.post){
+				// load comments for a post
+				var comments = api.getPostComments(payload.post.id);
+				comments.then(function({data, request}){
+					context.commit("loadComments", {
+						"obj": payload.post,
+						"data": data
+					});
+				});
+			} else if (payload.comment){
+				// load comments for a comment
+				var comments = api.getCommentComments(payload.comment.id);
+				comments.then(function({data, request}){
+					context.commit("loadComments", {
+						"obj": payload.comment,
+						"data": data
+					});
+				});
+			}
 		}
 	},
 	getters: {
