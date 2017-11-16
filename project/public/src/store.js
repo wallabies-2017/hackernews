@@ -57,44 +57,20 @@ const store = new Vuex.Store({
 			});
 		},
 		addComment: function(context, payload){
-			var createdAt = faker.date.past();
-			var post = context.getters.getPost(payload.post.id)
-			if (!post){
-				return false;
-			}
-
-			context.commit("addComment", {
-				
-				obj: post,
-				data: Object.assign(baseComment, payload.data)
+			api.addComment(payload.post.id, payload.data).then(function({request, data}){
+				context.commit("addComment", {
+					obj: payload.post,
+					data: data
+				});
 			});
-			return true;
 		},
 		editComment: function(context, payload){
-			var comment = context.getters.getComment(
-				payload.post._id, payload.comment._id
-			)
-			if (!comment){
-				return false;
-			}
-
-			var cleanedData = {};
-
-			if (payload.data.hasOwnProperty('content')){
-				cleanedData.content = payload.data.content;
-			}
-
-			if (payload.data.hasOwnProperty('username')){
-				cleanedData.username = payload.data.username;
-			}
-			
-			if (cleanedData){
+			api.editComment(payload.comment.id, payload.data).then(function({request, data}){
 				context.commit("editComment", {
-					obj:comment,
-					data: cleanedData
+					obj: payload.comment,
+					data: data
 				});
-			}
-
+			});
 		},
 		deleteComment: function(context, payload){
 			var comment = context.getters.getPost(payload.post._id)
@@ -113,14 +89,7 @@ const store = new Vuex.Store({
 				context.commit("loadPosts", {
 					"data": data
 				});
-			});		
-		},
-		editPosts: function(context){
-			api.getPosts().then(function({data,request}){
-				context.commit("editPosts", {
-					"data": data
-				});
-			});		
+			});
 		}
 	},
 	getters: {

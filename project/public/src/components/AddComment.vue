@@ -1,16 +1,10 @@
 <template>
-	<form v-on:submit.prevent="addComment($event, title, content, username)">
-		<label> Title:
-			<input type="text" name="title" v-model="title">
-		</label>
+	<form v-on:submit.prevent="addComment($event, content)">
 		<label>	Content:
 			<input type="text" name="content" v-model="content">
 		</label>
-		<label>	Username:
-			<input type="text" name="username" v-model="username">
-		</label>
 
-			<button type="submit">Add Comment</button>
+		<button type="submit">Add Comment</button>
 			
 	</form>
 </template>
@@ -25,24 +19,18 @@ export default {
 	},
 	data: function(){
 		return {
-			title:'',
-			content:'',
-			username:''
+			content:''
 		};
 	},
 	methods:{
-		addComment: function(event, title, content, username){
+		addComment: function(event, content){
 			this.$store.dispatch("addComment", {
 				post: this.post,
 				data: {
-					title: title,
-					content: content,
-					username: username
+					content: content
 				}
 			});
-			this.$set(this, "title", "");
 			this.$set(this, "content", "");
-			this.$set(this, "username", "");
 		}
 	}
 };

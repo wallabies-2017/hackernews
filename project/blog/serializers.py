@@ -10,7 +10,7 @@ class CommentListSerializer(serializers.HyperlinkedModelSerializer):
 			'url': {'view_name': 'blog:comment-detail'}
 		}	
 
-class PostDetailSerializer (serializers.ModelSerializer):
+class PostDetailSerializer(serializers.ModelSerializer):
 
 	comments = CommentListSerializer(many=True, read_only=True)
 
