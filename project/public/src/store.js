@@ -1,7 +1,7 @@
 "use strict";
 import Vue from 'vue'
 import Vuex from 'vuex'
-import api from '.api/blog'
+import api from './api/blog';
 
 Vue.use(Vuex);
 api.getPosts().then(function(){
@@ -126,7 +126,7 @@ const store = new Vuex.Store({
 				obj: postList,
 				target: payload.comment._id
 			});
-		}
+		},
 
 
 		loadPostList: function(context){
