@@ -20,8 +20,9 @@ export default {
 		});
 	},
 	editPost: function(postId, data){
+		console.log(postId)
 		return axios({
-			method: 'post',
+			method: 'put',
 			url: '/posts/' + postId,
 			data: data
 		})

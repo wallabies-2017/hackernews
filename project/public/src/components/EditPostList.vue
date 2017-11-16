@@ -3,7 +3,7 @@
 		<label> Name:
 			<input type="text" name="title" v-model="title">
 		</label>
-		<label>	Description:
+		<label>	Content:
 			<input type="text" name="content" v-model="content">
 		</label>	
 			<button type="submit">Edit Post</button>
