@@ -1,8 +1,12 @@
 "use strict";
 import Vue from 'vue'
 import Vuex from 'vuex'
+import api from '.api/blog'
 
 Vue.use(Vuex);
+api.getPosts().then(function(){
+	console.log(arguements);
+});
 
 const store = new Vuex.Store({
 	strict: true,
@@ -10,18 +14,21 @@ const store = new Vuex.Store({
 		postLists: [],
 	},
 	mutations: {
+
 		createPostList: function(state, payload){
 			state.postLists.push(payload);
 		},
+
+		loadPostList: function(state, payload){
+			Vue.set(state, 'posts', payload.data);
+		},
+
 		editPostList: function(state, payload){
 			if (payload.data.hasOwnProperty('title')){
 				Vue.set(payload.obj, 'title', payload.data.title);
 			}
 			if (payload.data.hasOwnProperty('description')){
 				Vue.set(payload.obj, 'description', payload.data.description);
-			}
-			if (payload.data.hasOwnProperty('username')){
-				Vue.set(payload.obj, 'username', payload.data.description);
 			}
 		},
 		addComment: function(state, payload){
@@ -36,21 +43,25 @@ const store = new Vuex.Store({
 		},
 		
 		deleteComment: function(state, payload){
-			_.remove(payload.obj.posts, function(value){
+			_.remove(payload.obj.comments, function(value){
 				return value._id === payload.target;
 			});
 		}
 	},
+
+
+
+
 	actions: {
 		createPostList: function(context, payload){
-			var basePostList = {
-				_id: +(new Date()), 
-				title: null, 
-				content: null, 
-				comments: [], 
-			};
-			context.commit("createPostList", Object.assign(basePostList, payload));
+		api.createPost(payload.data).then(function({request,data}){
+				context.commit("createPostList", data);
+			});
+			
 		},
+
+
+
 		editPostList: function(context, payload){
 			var postList = context.getters.getPostList(payload.postList._id);
 			if (!postList){
@@ -127,6 +138,15 @@ const store = new Vuex.Store({
 				obj: postList,
 				target: payload.comment._id
 			});
+		}
+
+
+		loadPostList: function(context){
+			api.getPostLists().then(function({data,request}){
+				context.commit("loadPostList", {
+					"data": data
+				});
+			});		
 		}
 	},
 	getters: {
