@@ -5,7 +5,7 @@ class CommentListSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Comment
-		fields = ['url','content']
+		fields = ['url','content', 'id']
 		extra_kwargs = {
 			'url': {'view_name': 'blog:comment-detail'}
 		}	
@@ -25,14 +25,17 @@ class PostDetailSerializer (serializers.ModelSerializer):
 	
 	class Meta:
 		model = Post
-		fields = ('title', 'description', 'comments', 'create_comment', 'create_vote')
+		fields = ('url', 'title', 'content', 'comments', 'create_comment', 'create_vote', 'id')
+		extra_kwargs = {
+			'url': {'view_name': 'blog:post-detail'}
+		}
 
 
 class ListPostSerializer (serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Post
-		fields = ('url','title', 'description')
+		fields = ('url','title', 'content', 'id')
 		extra_kwargs = {
 			'url': {'view_name': 'blog:post-detail'}
 		}
@@ -47,13 +50,13 @@ class CommentDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Comment
-		fields = ['content', 'comments', 'create_comment', 'create_vote']
+		fields = ['content', 'comments', 'create_comment', 'create_vote', 'id']
 
 class VoteListSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Vote
-		fields = ('url', 'activity')
+		fields = ('url', 'activity', 'id')
 		extra_kwargs = {
 			'url': {'view_name': 'blog:post-detail'}
 		}
@@ -62,7 +65,7 @@ class VoteDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Vote
-		fields = ['activity']
+		fields = ['activity', 'id']
 
 
 

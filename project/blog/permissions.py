@@ -7,7 +7,7 @@ class PostIsOwnerOrReadOnly(permissions.BasePermission):
 	def has_object_permission(self, request, view, obj):
 		if request.method in permissions.SAFE_METHODS:
 			return True
-		return request.user == obj.posted_by	
+		return request.user == obj.username	
 
 class CommentIsOwnerOrReadOnly(permissions.BasePermission):
 	'''
@@ -16,7 +16,7 @@ class CommentIsOwnerOrReadOnly(permissions.BasePermission):
 	def has_object_permission(self, request, view, obj):
 		if request.method in permissions.SAFE_METHODS:
 			return True
-		return request.user == obj.author	
+		return request.user == obj.username	
 
 class VoteIsOwnerOrReadOnly(permissions.BasePermission):
 	'''

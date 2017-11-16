@@ -7,6 +7,7 @@ import CommentItem from './components/CommentItem.vue'
 import CommentSummary from './components/CommentSummary.vue'
 import EditPostList from './components/EditPostList.vue'
 import AddComment from './components/AddComment.vue'
+import EditComment from './components/EditComment.vue'
 
 import DataStore from './store.js'
 
@@ -17,6 +18,8 @@ Vue.component("comment-item", CommentItem);
 Vue.component("comment-summary", CommentSummary);
 Vue.component("edit-post-list", EditPostList);
 Vue.component("add-comment", AddComment);
+Vue.component("edit-comment", EditComment);
+
 
 var app = new Vue({
 	el: '#app',
@@ -29,5 +32,8 @@ var app = new Vue({
 		},
 		sharedState: DataStore.state
 	},
-	store: DataStore
+	store: DataStore,
+	created: function(){
+		this.$store.dispatch('loadPosts');
+	}
 });

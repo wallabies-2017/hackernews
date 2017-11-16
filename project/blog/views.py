@@ -17,7 +17,7 @@ class PostListView(generics.ListCreateAPIView):
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def perform_create(self, serializer):
-		serializer.save(posted_by=self.request.user)
+		serializer.save(username=self.request.user)
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Post.objects.all()
@@ -41,7 +41,7 @@ class PostCommentsListView(generics.ListCreateAPIView):
 
 	def perform_create(self, serializer):
 		post = self.get_post()
-		serializer.save(author=self.request.user, post=post, parent=post)
+		serializer.save(username=self.request.user, post=post, parent=post)
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -65,7 +65,7 @@ class CommentCommentsListView(generics.ListCreateAPIView):
 
 	def perform_create(self, serializer):
 		comment = self.get_comment()
-		serializer.save(author=self.request.user, post=comment.post, parent=comment)
+		serializer.save(username=self.request.user, post=comment.post, parent=comment)
 
 class PostVoteListView(generics.ListCreateAPIView):
 	queryset = Vote.objects.all()

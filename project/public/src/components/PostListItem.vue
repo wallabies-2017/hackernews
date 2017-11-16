@@ -4,26 +4,26 @@
 			<post-list-summary 
 				v-if="!mode.edit" 
 				v-bind:post="post" 
-				v-bind:key="post._id"
+				v-bind:key="post.id"
 			>
 			</post-list-summary>
 			
 			<edit-post-list 
 				v-if="mode.edit" 
 				v-bind:post="post" 
-				v-bind:key="post._id"
+				v-bind:key="post.id"
 			>
 			</edit-post-list>
 		</transition-group>
 
 		<button 
-			v-bind:key="post._id"
+			v-bind:key="post.id"
 			v-on:click="mode.edit = !mode.edit" 
 		>
 			{{ editMode }}
 		</button>
 		<button 
-			v-bind:key="post._id"
+			v-bind:key="post.id"
 			v-on:click="mode.detail = !mode.detail" 
 		>
 			{{ detailMode }}
@@ -34,20 +34,20 @@
 			<add-comment 
 				v-if="mode.detail"
 				v-bind:post="post"
-				v-bind:key="post._id"
+				v-bind:key="post.id"
 			>
 			</add-comment>
 
 			<ul 
 				v-if="mode.detail"
-				v-bind:key="post._id"
+				v-bind:key="post.id"
 			>
 				<li 
 					is="comment-item"
 					v-for="comment in post.comments"
 					v-bind:post="post"
 					v-bind:comment="comment"
-					v-bind:key="comment._id"
+					v-bind:key="comment.id"
 				>
 				
 				</li>

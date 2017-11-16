@@ -1,18 +1,22 @@
 "use strict";
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import api from './api/blog';
 var faker = require("faker");
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	strict: true,
+	// strict: true,
 	state: {
 		posts: [],
 	},
 	mutations: {
 		createPost: function(state, payload){
 			state.posts.push(payload)
+		},
+		loadPosts: function(state, payload){
+			Vue.set(state, 'posts', payload.data);
 		},
 		editPost: function(state, payload){
 			if (payload.data.hasOwnProperty('title')){
@@ -85,7 +89,6 @@ const store = new Vuex.Store({
 			if (!post){
 				return false;
 			}
-			console.log(payload.data)
 			var baseComment = {
 				_id: +(new Date()),
 				content: null, 
@@ -105,7 +108,7 @@ const store = new Vuex.Store({
 		},
 		editComment: function(context, payload){
 			var comment = context.getters.getComment(
-				payload.post._id, payload.comments._id
+				payload.post._id, payload.comment._id
 			)
 			if (!comment){
 				return false;
@@ -140,6 +143,13 @@ const store = new Vuex.Store({
 				obj: comment,
 				target: payload.comment._id
 			});
+		},
+		loadPosts: function(context){
+			api.getPosts().then(function({data,request}){
+				context.commit("loadPosts", {
+					"data": data
+				});
+			});		
 		}
 	},
 	getters: {
@@ -172,10 +182,8 @@ const store = new Vuex.Store({
 					return post.comments
 				}
 			}
-		}
+		},
 	}
-
-	
 
 });
 

@@ -13,7 +13,7 @@
 		>
 		</edit-comment>
 		<button 
-			v-bind:key="post._id"
+			v-bind:key="post.id"
 			v-on:click="mode.edit = !mode.edit" 
 		>
 			{{ editMode }}

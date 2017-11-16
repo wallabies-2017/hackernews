@@ -49,8 +49,7 @@ class LoginView(View):
 		if form.is_valid():
 			user = form.get_user()
 			login(request, user)
-			return redirect('blog:index')
-
+			return redirect(settings.LOGIN_SUCCESS_URL)
 		else:
 			return render(request, 'users/login.html', context)
 			
