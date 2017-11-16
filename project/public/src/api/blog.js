@@ -6,11 +6,23 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 
 export default {
+	getPosts: function(){
+		return axios({
+			method: 'get',
+			url: '/posts'
+		});
+	},
 	getPost: function(postId){
-
+		return axios({
+			method: 'get',
+			url: '/posts/' + postId
+		});
 	},
 	getComments: function(postId){
-
+		return axios({
+			method: 'get',
+			url: '/posts/' + postId + '/comments'
+		});
 	},
 	createPost: function(data){
 		return axios({
@@ -21,15 +33,23 @@ export default {
 	},
 	editPost: function(postId, data){
 		return axios({
-			method: 'post',
+			method: 'put',
 			url: '/posts/' + postId,
 			data: data
-		})
+		});
 	},
-	getPosts: function(){
+	addComment: function(postId, data){
 		return axios({
-			method: 'get',
-			url: '/posts'
+			method: 'post',
+			url: '/posts/' + postId + "/comments",
+			data: data
+		});
+	},
+	editComment: function(commentId, data){
+		return axios({
+			method: 'put',
+			url: '/comments/' + commentId,
+			data: data
 		});
 	}
 }

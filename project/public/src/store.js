@@ -7,7 +7,7 @@ var faker = require("faker");
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	// strict: true,
+	strict: true,
 	state: {
 		posts: [],
 	},
@@ -19,16 +19,9 @@ const store = new Vuex.Store({
 			Vue.set(state, 'posts', payload.data);
 		},
 		editPost: function(state, payload){
-			if (payload.data.hasOwnProperty('title')){
-				Vue.set(payload.obj, 'title', payload.data.title);
-			}
-
-			if (payload.data.hasOwnProperty('content')){
-				Vue.set(payload.obj, 'content', payload.data.content)
-			}
+			Object.assign(payload.obj, payload.data);
 		},
 		addComment: function(state, payload){
-			
 			payload.obj.comments.push(payload.data)
 		},
 		editComment: function(state, payload){
@@ -56,27 +49,12 @@ const store = new Vuex.Store({
 			
 		},
 		editPost: function(context, payload){
-			var post = context.getters.getPost(payload.post._id)
-
-			if (!post){
-				return false;
-			}
-			var cleanedData = {};
-			if (payload.data.hasOwnProperty('title')){
-				cleanedData.title = payload.data.title;
-			}
-			if (payload.data.hasOwnProperty('content')){
-				cleanedData.content = payload.data.content
-			}
-
-			if (cleanedData){
+			api.editPost(payload.post.id, payload.data).then(function({request, data}){
 				context.commit("editPost", {
-					obj: post,
-					data: cleanedData
+					obj: payload.post,
+					data: data
 				});
-				return true;
-			}
-			return false;
+			});
 		},
 		addComment: function(context, payload){
 			var createdAt = faker.date.past();

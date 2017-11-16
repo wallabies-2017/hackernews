@@ -55,6 +55,14 @@ if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hackernews.dev_settings")
 ```
 - all we changed was the name of the settings module to use. From `"hackernews.settings"` to `"hackernews.dev_settings"`
+- also add this to the bottom of manage.py
+```py
+    execute_from_command_line(sys.argv)
+    # Add the following lines.
+    sys.stdout.flush()
+    sys.stderr.flush()
+```
+- this allows us to see any inital errors that occur on boot up(Hopefully).
 
 - we did all of this so that we can see the error messages from django in the terminal
 
