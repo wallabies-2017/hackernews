@@ -14,24 +14,14 @@ const store = new Vuex.Store({
 		loadPosts: function(state, payload){
 			Vue.set(state, 'posts', payload.data);
 		},
+		loadComments: function(state, payload){
+			Vue.set(payload.obj, "comments", payload.data);
+		},
 		createPost: function(state, payload){
 			state.posts.push(payload);
 		},
 		editPost: function(state, payload){
-			var isChanged = false;
-			if (payload.data.hasOwnProperty('title')){
-				Vue.set(payload.obj, 'title', payload.data.title);
-				isChanged = true;
-			}
-	
-			if (payload.data.hasOwnProperty('content')){
-				Vue.set(payload.obj, 'content', payload.data.content);
-				isChanged = true;
-			}
-
-			if(isChanged){
-				Vue.set(payload.obj, 'updatedAt', +(new Date()))
-			}			
+			Object.assign(payload.obj, payload.data);
 		},
 		createComment: function(state, payload){
 			payload.obj.comments.push(payload.data);
@@ -62,50 +52,22 @@ const store = new Vuex.Store({
 			
 		},
 		editPost: function(context, payload){
-			var post = context.getters.getPost(payload.post._id);
-			if (!post){
-				return false;
-			}
-			var cleanedData = {};
-			if (payload.data.hasOwnProperty('title')){
-				cleanedData.title = payload.data.title;
-			}
-	
-			if (payload.data.hasOwnProperty('content')){
-				cleanedData.content = payload.data.content;
-			}
-
-			if (cleanedData){
+			api.editPost(payload.post.id, payload.data).then(function({request, data}){
 				context.commit("editPost", {
-					obj: post,
-					data: cleanedData
+					obj: payload.post,
+					data: data
 				});
-				return true;
-			}
-
-			return false;
+			});
 	
 		},	
 		createComment: function(context, payload){
-			var post = context.getters.getPost(payload.post._id);
-			if (!post){
-				return false;
-			}
-			var baseComment = {
-				_id: +(new Date()), 
-				content: null,
-				postedAt: +(new Date()),
-				updatedAt: +(new Date()),
-				author: null, 
-				comments:[]
-			};
-
-			context.commit("createComment", {
-				obj: post,
-				data: Object.assign(baseComment, payload.data)
+			api.createComment(payload.post.id, payload.data).then(function({request, data}){
+				context.commit("createComment", {
+					obj: payload.post,
+					data: data
+				});
 			});
-			return true;
-	
+			
 	
 		},
 		editComment: function(context, payload){
@@ -145,6 +107,20 @@ const store = new Vuex.Store({
 			api.getPosts().then(function({data, request}){
 				context.commit("loadPosts", {"data":data});
 			});
+		},
+
+		loadComments: function(context, payload){
+			if (payload.post){
+				var comments = api.getComments(payload.post.id);
+				comments.then(function({request, data}){
+					context.commit("loadComments", {
+						obj: payload.post,
+						data: data
+					});
+				});
+			} else if (payload.comment){
+				// ...
+			}
 		}
 	},
 	getters: {

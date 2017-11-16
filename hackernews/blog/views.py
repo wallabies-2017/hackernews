@@ -6,8 +6,7 @@ from rest_framework import generics, permissions
 
 from blog.models import Post, Comment, Vote
 from blog.serializers import (
-	PostDetailSerializer, CommentListSerializer, 
-	ListPostSerializer, CommentDetailSerializer, 
+	PostDetailSerializer, CommentDetailSerializer, 
 	VoteListSerializer, VoteDetailSerializer
 )
 from blog.permissions import PostIsOwnerOrReadOnly, CommentIsOwnerOrReadOnly, VoteIsOwnerOrReadOnly
@@ -16,7 +15,7 @@ from blog.permissions import PostIsOwnerOrReadOnly, CommentIsOwnerOrReadOnly, Vo
 
 class PostListView(generics.ListCreateAPIView):
 	queryset = Post.objects.all()
-	serializer_class = ListPostSerializer
+	serializer_class = PostDetailSerializer
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def perform_create(self, serializer):
@@ -30,7 +29,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class PostCommentsListView(generics.ListCreateAPIView):
 	queryset = Comment.objects.all()
-	serializer_class = CommentListSerializer
+	serializer_class = CommentDetailSerializer
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def get_post(self):
@@ -54,7 +53,7 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class CommentCommentsListView(generics.ListCreateAPIView):
 	queryset = Comment.objects.all()
-	serializer_class = CommentListSerializer
+	serializer_class = CommentDetailSerializer
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def get_comment(self):

@@ -3,11 +3,11 @@ from blog.models import Post, Comment, Vote
 
 class CommentDetailSerializer(serializers.ModelSerializer):
 
-	comments = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='blog:comment-detail'
-    )
+	# comments = serializers.HyperlinkedRelatedField(
+ #        many=True,
+ #        read_only=True,
+ #        view_name='blog:comment-detail'
+ #    )
 
 	create_comment = serializers.HyperlinkedIdentityField(view_name='blog:comment-comments')
 
@@ -15,24 +15,24 @@ class CommentDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Comment
-		fields = ['content', 'comments', 'create_comment', 'create_vote', 'id'] 
+		fields = ['content', 'create_comment', 'create_vote', 'id'] 
 
-class CommentListSerializer(serializers.HyperlinkedModelSerializer):
+# class CommentListSerializer(serializers.HyperlinkedModelSerializer):
 
-	class Meta:
-		model = Comment
-		fields = ['url', 'content', 'id']	
-		extra_kwargs = {
-			"url": {"view_name": "blog:comment-detail"}
-		}
+# 	class Meta:
+# 		model = Comment
+# 		fields = ['url', 'content', 'id']	
+# 		extra_kwargs = {
+# 			"url": {"view_name": "blog:comment-detail"}
+# 		}
 
 class PostDetailSerializer (serializers.HyperlinkedModelSerializer):
 
-	comments = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='blog:comment-detail'
-    )
+	# comments = serializers.HyperlinkedRelatedField(
+ #        many=True,
+ #        read_only=True,
+ #        view_name='blog:comment-detail'
+ #    )
 
 	create_comment = serializers.HyperlinkedIdentityField(view_name='blog:comments')
 
@@ -40,20 +40,20 @@ class PostDetailSerializer (serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Post
-		fields = ('url', 'title', 'description', 'comments', 'create_comment', 'create_vote', 'id')
+		fields = ('url', 'title', 'description', 'create_comment', 'create_vote', 'id')
 
 		extra_kwargs = {
 			"url": {"view_name": "blog:post-detail"}
 		}
 
-class ListPostSerializer(serializers.HyperlinkedModelSerializer):
+# class ListPostSerializer(serializers.HyperlinkedModelSerializer):
 
-	class Meta:
-		model = Post
-		fields = ('url','title', 'description', 'id')
-		extra_kwargs = {
-			"url": {"view_name": "blog:post-detail"}
-		}		
+# 	class Meta:
+# 		model = Post
+# 		fields = ('url','title', 'description', 'id')
+# 		extra_kwargs = {
+# 			"url": {"view_name": "blog:post-detail"}
+# 		}		
 
 
 class VoteListSerializer(serializers.HyperlinkedModelSerializer):
