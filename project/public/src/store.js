@@ -84,15 +84,6 @@ const store = new Vuex.Store({
 			if (!post){
 				return false;
 			}
-			var baseComment = {
-				_id: +(new Date()),
-				content: null, 
-				createdAt: createdAt,
-				updatedAt: null,
-				description: null,
-				username: null,
-				comments: []
-			};
 
 			context.commit("addComment", {
 				
@@ -145,6 +136,13 @@ const store = new Vuex.Store({
 					"data": data
 				});
 			});		
+		},
+		editPosts: function(context){
+			api.getPosts().then(function({data,request}){
+				context.commit("editPosts", {
+					"data": data
+				});
+			});		
 		}
 	},
 	getters: {
@@ -179,9 +177,6 @@ const store = new Vuex.Store({
 			}
 		},
 	}
-
 });
 
 export default store;
-
-

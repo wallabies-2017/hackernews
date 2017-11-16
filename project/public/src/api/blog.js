@@ -20,7 +20,11 @@ export default {
 		});
 	},
 	editPost: function(postId, data){
-
+		return axios({
+			method: 'post',
+			url: '/posts/' + postId,
+			data: data
+		})
 	},
 	getPosts: function(){
 		return axios({
