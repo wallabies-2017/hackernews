@@ -1,14 +1,12 @@
 <template>
-	<form v-on:submit.prevent="createPost($event, title, content, username)">
+	<form v-on:submit.prevent="createPost($event, title, content)">
 		<label> Title:
 			<input type="text" name="title" v-model="title">
 		</label>
 		<label>	Content:
 			<input type="text" name="content" v-model="content">
 		</label>
-		<label>	Username:
-			<input type="text" name="username" v-model="username">
-		</label>
+		
 			<button type="submit">Create Post</button>
 			
 	</form>
@@ -21,26 +19,20 @@ export default {
 	data: function(){
 		return {
 			title:'',
-			content:'',
-			createdAt: '',
-			username: '',
-			comments: []
+			content:''
 
 		};
 	},
 	methods:{
-		createPost: function(event, title, content, createdAt, username){
+		createPost: function(event, title, content){
 			this.$store.dispatch("createPost", {
-				title: title,
-				content: content,
-				createdAt: createdAt,
-				username: username
-
+				data: {
+					title: title,
+					content: content
+				}
 			});
 			this.$set(this, "title", "");
 			this.$set(this, "content", "");
-			this.$set(this, "createdAt", "");
-			this.$set(this, "username", "");
 			
 		}
 	}

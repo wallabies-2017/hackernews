@@ -49,16 +49,11 @@ const store = new Vuex.Store({
 	},
 	actions: {
 		createPost: function(context, payload){
-			var basePost = {
-				_id: +(new Date()),
-				title: null,
-				content: null,
-				createdAt: null,
-				updatedAt: null,
-				username: null,
-				comments:[]
-			}
-			context.commit("createPost", Object.assign(basePost, payload))
+			
+			api.createPost(payload.data).then(function({request,data}){
+				context.commit("createPost", data);
+			});
+			
 		},
 		editPost: function(context, payload){
 			var post = context.getters.getPost(payload.post._id)
@@ -85,7 +80,7 @@ const store = new Vuex.Store({
 		},
 		addComment: function(context, payload){
 			var createdAt = faker.date.past();
-			var post = context.getters.getPost(payload.post._id)
+			var post = context.getters.getPost(payload.post.id)
 			if (!post){
 				return false;
 			}
