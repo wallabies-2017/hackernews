@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     url(r'^posts$', views.PostListView.as_view(), name="posts"),
-    url(r'^posts/(?P<pk>[0-9]+)/$', views.PostDetail.as_view(), name="post-detail"),
+    url(r'^posts/(?P<pk>[0-9]+)$', views.PostDetail.as_view(), name="post-detail"),
     url(r'^posts/(?P<pk>[0-9]+)/comments$', views.PostCommentsListView.as_view(), name="post-comments"),
     url(r'^comments/(?P<pk>[0-9]+)/$', views.CommentDetail.as_view(), name="comment-detail"),
     url(r'^comments/(?P<pk>[0-9]+)/comments$', views.CommentCommentsListView.as_view(), name="comment-comments"),
