@@ -6,7 +6,7 @@ import api from './api/blog';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	// strict: true,
+	strict: true,
 	state: {
 		posts: [],
 	},

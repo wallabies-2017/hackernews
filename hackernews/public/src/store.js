@@ -6,7 +6,7 @@ import api from './api/blog.js'
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	// strict: true,
+	strict: true,
 	state: {
 		posts: [],
 	},
@@ -56,16 +56,10 @@ const store = new Vuex.Store({
 	},
 	actions: {
 		createPost: function(context, payload){
-			var basePost = {
-				_id: +(new Date()), 
-				title: null, 
-				description: null,
-				postedAt: +(new Date()),
-				updatedAt: +(new Date()),
-				username: null, 
-				comments:[]
-			};
-			context.commit("createPost", Object.assign(basePost, payload));
+			api.createPost(payload.data).then(function({request, data}){
+				context.commit("createPost", data);
+			});
+			
 		},
 		editPost: function(context, payload){
 			var post = context.getters.getPost(payload.post._id);
@@ -149,7 +143,6 @@ const store = new Vuex.Store({
 
 		loadPosts: function(context){
 			api.getPosts().then(function({data, request}){
-				
 				context.commit("loadPosts", {"data":data});
 			});
 		}

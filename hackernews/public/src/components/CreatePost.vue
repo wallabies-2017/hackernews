@@ -26,8 +26,10 @@ export default {
 	methods:{
 		createPost: function(event, title, description){
 			this.$store.dispatch("createPost", {
-				title: title,
-				description: description
+				data: {
+					title: title,
+					description: description
+				}	
 			});
 			this.$set(this, "title", "");
 			this.$set(this, "description", "");

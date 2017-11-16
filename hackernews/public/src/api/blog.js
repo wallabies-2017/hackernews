@@ -1,6 +1,8 @@
 import axios from "axios";
 
-axios.defaults.baseURL = '/api/v0/blog'
+axios.defaults.baseURL = '/api/v0/blog';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 
 export default {
@@ -11,10 +13,18 @@ export default {
 
 	},
 	createPost: function(data){
-
+		return axios({
+			method: 'post',
+			url: '/posts',
+			data: data
+		});
 	},
 	editPost: function(postId, data){
-
+		return axios({
+			method: 'put',
+			url: '/posts/' + postId,
+			data: data
+		})
 	},
 	getPosts: function(){
 		return axios({
