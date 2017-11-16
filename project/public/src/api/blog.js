@@ -44,6 +44,12 @@ export default {
 			data: data
 		});
 	},
+	deletePost: function(postId){
+		return axios({
+			method: 'delete',
+			url: '/posts/' + postId
+		});
+	},
 	addPostComment: function(postId, data){
 		return axios({
 			method: 'post',

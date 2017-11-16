@@ -28,6 +28,14 @@
 		>
 			{{ detailMode }}
 		</button>
+
+
+		<button 
+			v-bind:key="post.id"
+			v-on:click="deletePost" 
+		>
+			Delete
+		</button>
 		
 
 		<transition-group name="component-fade" mode="in-out">
@@ -71,6 +79,11 @@ export default {
 		}
 	},
 	methods: {
+		deletePost: function(event){
+			this.$store.dispatch("deletePost", {
+				post: this.post
+			});
+		},
 		detailClick: function(event){
 			this.$set(this.mode, "detail", !this.mode.detail);
 

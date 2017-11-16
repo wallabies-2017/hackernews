@@ -31,9 +31,17 @@ const store = new Vuex.Store({
 			Object.assign(payload.obj, payload.data);
 		},
 		deleteComment: function(state, payload){
-			_.remove(payload.obj.comments, function(value){
-				return value._id === payload.target;
-			});
+			// _.remove(payload.obj.comments, function(value){
+			// 	return value._id === payload.target;
+			// });
+		},
+		deletePost: function(state, payload){
+			for (let idx = 0; idx < state.posts.length; idx++){
+				if (state.posts[idx].id === payload.target.id){
+					state.posts.splice(idx, 1);
+					return;
+				}
+			}
 		}
 	},
 	actions: {
@@ -76,16 +84,23 @@ const store = new Vuex.Store({
 				});
 			});
 		},
-		deleteComment: function(context, payload){
-			var comment = context.getters.getPost(payload.post._id)
+		// deleteComment: function(context, payload){
+		// 	var comment = context.getters.getPost(payload.post._id)
 
-			if (!comment){
-				return false;
-			}
+		// 	if (!comment){
+		// 		return false;
+		// 	}
 
-			context.commit("deleteComment", {
-				obj: comment,
-				target: payload.comment._id
+		// 	context.commit("deleteComment", {
+		// 		obj: comment,
+		// 		target: payload.comment._id
+		// 	});
+		// },
+		deletePost: function(context, payload){
+			api.deletePost(payload.post.id).then(function(){
+				context.commit("deletePost", {
+					target: payload.post
+				});
 			});
 		},
 		loadPosts: function(context){
@@ -118,6 +133,9 @@ const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		getPosts: function(state, getters){
+			return state.posts;
+		},
 		getPost: function(state, getters){
 			return function(postId){
 				var viewPost = state.posts;
