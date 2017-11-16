@@ -34,6 +34,8 @@ const store = new Vuex.Store({
 		addComment: function(state, payload){
 			payload.obj.comments.push(payload.data);
 		},
+
+
 		editComment: function(state, payload){
 			if (payload.data.hasOwnProperty('content')){
 				Vue.set(payload.obj, 'content', payload.data.content);
@@ -88,24 +90,10 @@ const store = new Vuex.Store({
 	
 		},	
 		addComment: function(context, payload){
-			var postList = context.getters.getPostList(payload.postList._id);
-			if (!postList){
-				return false;
-			}
-			var baseComment = {
-				_id: +(new Date()), 
-				content: null, 
-				createdAt: Date(),
-				comments : []		
-			};
-
-			context.commit("addComment", {
-				obj: postList,
-				data: Object.assign(baseComment, payload.data)
+		api.createComment(payload.data).then(function({request,data}){
+				context.commit("createComment", data);
 			});
-			return true;
-	
-	
+			
 		},
 		editComment: function(context, payload){
 			var comment = context.getters.getComment(payload.postList._id, payload.comment._id);

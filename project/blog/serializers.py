@@ -15,7 +15,7 @@ class CommentDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Comment
-		fields = ['content', 'comments', 'create_comment', 'create_vote'] 
+		fields = ['content', 'comments', 'create_comment', 'create_vote', 'id'] 
 
 class CommentListSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -40,7 +40,7 @@ class PostDetailSerializer (serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Post
-		fields = ('url', 'title', 'description', 'comments', 'create_comment', 'create_vote')
+		fields = ('url', 'title', 'description', 'comments', 'create_comment', 'create_vote', 'id')
 
 		extra_kwargs = {
 			"url": {"view_name": "blog:post-detail"}

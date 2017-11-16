@@ -21,6 +21,7 @@ Vue.component("comment-summary", CommentSummary);
 Vue.component("add-comment", AddComment);
 Vue.component("edit-comment", EditComment);
 
+
 var app = new Vue({
 	el: '#app',
 	data: {
@@ -32,5 +33,8 @@ var app = new Vue({
 		},
 		sharedState: DataStore.state
 	},
-	store: DataStore
+	store: DataStore,
+	created: function(){
+		this.$store.dispatch('loadPostList');
+	}
 });

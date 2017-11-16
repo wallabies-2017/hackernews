@@ -10,6 +10,7 @@ class Post(models.Model):
 	description = models.TextField()
 	posted_by = models.ForeignKey(User)
 	posted_at = models.DateTimeField(default=timezone.now)
+	
 
 	comments = GenericRelation(
 		'blog.Comment', 
@@ -27,6 +28,10 @@ class Post(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	def save(self, *args, **kwargs):
+		sef.updated_at = timezone.now()
+		super().save(*arg, **kwargs)
 
 
 class Comment(models.Model):
